@@ -3,7 +3,7 @@ module github.com/open-telemetry/opentelemetry-collector-contrib/exporter/sumolo
 go 1.17
 
 require (
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	go.opentelemetry.io/collector v0.39.1-0.20211119172502-53d057f9c0e7
 	go.opentelemetry.io/collector/model v0.39.1-0.20211119172502-53d057f9c0e7
 	go.uber.org/multierr v1.7.0
