@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/google/uuid v1.3.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.5
 	go.opentelemetry.io/collector v0.39.1-0.20211119172502-53d057f9c0e7
 	go.opentelemetry.io/collector/model v0.39.1-0.20211119172502-53d057f9c0e7
 	go.uber.org/multierr v1.7.0
@@ -34,5 +34,5 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
