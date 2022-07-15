@@ -58,7 +58,7 @@ const (
 
 	// ActionCopyMetrics copies metrics using Rule.Mapping.
 	// Rule.DimensionKey and Rule.DimensionValues can be used to filter datapoints that must be copied,
-	// if these fields are set, only metics having a dimension with key == Rule.DimensionKey and
+	// if these fields are set, only metrics having a dimension with key == Rule.DimensionKey and
 	// value in Rule.DimensionValues will be copied.
 	ActionCopyMetrics Action = "copy_metrics"
 
@@ -111,7 +111,7 @@ const (
 	// the integer value of the 'memory.used' metric will be divided by the integer value of 'memory.total'. The
 	// result will be a new float metric with the name 'memory.utilization' and the value of the quotient. The
 	// new metric will also get any attributes of the 'memory.used' metric except for its value and metric name.
-	// Currently only integer inputs are handled and only division is supported.
+	// Currently only integer inputs are handled and only division and addition is supported.
 	ActionCalculateNewMetric Action = "calculate_new_metric"
 
 	// ActionDropMetrics drops datapoints with metric name defined in "metric_names".
@@ -144,6 +144,8 @@ type MetricOperator string
 const (
 	// MetricOperatorDivision is the MetricOperator division.
 	MetricOperatorDivision MetricOperator = "/"
+	// MetricOperatorAddition is the MetricOperator addition.
+	MetricOperatorAddition MetricOperator = "+"
 )
 
 // MetricValueType is the enum to capture valid metric value types that can be converted
@@ -338,7 +340,7 @@ func validateTranslationRules(rules []Rule) error {
 				return fmt.Errorf(`fields "metric_name", "operand1_metric", "operand2_metric", and "operator" are `+
 					"required for %q translation rule", tr.Action)
 			}
-			if tr.Operator != MetricOperatorDivision {
+			if tr.Operator != MetricOperatorDivision && tr.Operator != MetricOperatorAddition {
 				return fmt.Errorf("invalid operator %q for %q translation rule", tr.Operator, tr.Action)
 			}
 		case ActionDropMetrics:
@@ -632,16 +634,18 @@ func calculateNewMetric(
 
 	newPt := proto.Clone(operand1).(*sfxpb.DataPoint)
 	newPt.Metric = tr.MetricName
-	var newPtVal float64
 	switch tr.Operator {
-	// only supporting divide operator for now
+	// only supporting divide and add operators for now
 	case MetricOperatorDivision:
-		newPtVal = *v1 / *v2
+		newPtVal := *v1 / *v2
+		newPt.Value = sfxpb.Datum{DoubleValue: &newPtVal}
+	case MetricOperatorAddition:
+		newPtVal := int64(*v1) + int64(*v2)
+		newPt.Value = sfxpb.Datum{IntValue: &newPtVal}
 	default:
 		logger.Warn("calculate_new_metric: unsupported operator", zap.String("operator", string(tr.Operator)))
 		return nil
 	}
-	newPt.Value = sfxpb.Datum{DoubleValue: &newPtVal}
 	return newPt
 }
 
