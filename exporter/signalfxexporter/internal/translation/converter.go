@@ -102,11 +102,12 @@ func (c *MetricsConverter) MetricsToSignalFxV2(md pmetric.Metrics) []*sfxpb.Data
 			ilm := rm.ScopeMetrics().At(j)
 			for k := 0; k < ilm.Metrics().Len(); k++ {
 				dps := c.translator.FromMetric(ilm.Metrics().At(k), extraDimensions)
-				dps = c.translateAndFilter(dps)
+				//dps = c.translateAndFilter(dps)
 				sfxDataPoints = append(sfxDataPoints, dps...)
 			}
 		}
 	}
+	sfxDataPoints = c.translateAndFilter(sfxDataPoints)
 
 	return c.datapointValidator.sanitizeDataPoints(sfxDataPoints)
 }
@@ -116,6 +117,18 @@ func (c *MetricsConverter) translateAndFilter(dps []*sfxpb.DataPoint) []*sfxpb.D
 		dps = c.metricTranslator.TranslateDataPoints(c.logger, dps)
 	}
 
+	return c.filterDataPoints(dps)
+}
+
+//func (c* MetricsConverter) translateDataPointCombos(dps []*sfxpb.DataPoint) []*sfxpb.DataPoint {
+//	if c.metricTranslator != nil {
+//		dps = c.metricTranslator.TranslateDataPointCombos(c.logger, dps)
+//	}
+//
+//	return c.filterDataPoints(dps)
+//}
+
+func (c* MetricsConverter) filterDataPoints(dps []*sfxpb.DataPoint) []*sfxpb.DataPoint {
 	resultSliceLen := 0
 	for i, dp := range dps {
 		if !c.filterSet.Matches(dp) {
@@ -127,8 +140,8 @@ func (c *MetricsConverter) translateAndFilter(dps []*sfxpb.DataPoint) []*sfxpb.D
 			c.logger.Debug("Datapoint does not match filter, skipping", zap.String("dp", DatapointToString(dp)))
 		}
 	}
-	dps = dps[:resultSliceLen]
-	return dps
+
+	return dps[:resultSliceLen]
 }
 
 func filterKeyChars(str string, nonAlphanumericDimChars string) string {

@@ -112,6 +112,8 @@ const (
 	// result will be a new float metric with the name 'memory.utilization' and the value of the quotient. The
 	// new metric will also get any attributes of the 'memory.used' metric except for its value and metric name.
 	// Currently only integer inputs are handled and only division and addition is supported.
+	// Note: For addition operations, only one operand is required, the resulting value will simply match
+	// the existing operand.
 	ActionCalculateNewMetric Action = "calculate_new_metric"
 
 	// ActionDropMetrics drops datapoints with metric name defined in "metric_names".
@@ -404,6 +406,10 @@ func getMetricNamesAsSlice(metricName string, metricNames map[string]bool) []str
 	}
 	return out
 }
+//
+//func (mp *MetricTranslator) TranslateDataPointCombos(logger *zap.Logger, sfxDataPoints []*sfxpb.DataPoint) []*sfxpb.DataPoint {
+//
+//}
 
 // TranslateDataPoints transforms datapoints to a format compatible with signalfx backend
 // sfxDataPoints represents one metric converted to signalfx protobuf datapoints
@@ -505,6 +511,22 @@ func (mp *MetricTranslator) TranslateDataPoints(logger *zap.Logger, sfxDataPoint
 				processedDataPoints = append(processedDataPoints, newPt)
 			}
 
+			// Don't require data points to be in pairs when calculating a new metric using addition.
+			// Find data points without a pair, add their values as calculated new metric.
+			if tr.Operator == MetricOperatorAddition {
+				dps := calcNewMetricInputSingles(processedDataPoints, tr)
+
+				for _, dp := range dps {
+					newPt := proto.Clone(dp).(*sfxpb.DataPoint)
+					newPt.Metric = tr.MetricName
+
+					if newPt == nil {
+						continue
+					}
+					processedDataPoints = append(processedDataPoints, newPt)
+				}
+			}
+
 		case ActionAggregateMetric:
 			// NOTE: Based on the usage of TranslateDataPoints we can assume that the datapoints batch []*sfxpb.DataPoint
 			// represents only one metric and all the datapoints can be aggregated together.
@@ -551,6 +573,47 @@ func (mp *MetricTranslator) TranslateDataPoints(logger *zap.Logger, sfxDataPoint
 	}
 
 	return processedDataPoints
+}
+
+func calcNewMetricInputSingles(processedDataPoints []*sfxpb.DataPoint, tr Rule) []*sfxpb.DataPoint {
+	var operand1Pts, operand2Pts, singularPoints []*sfxpb.DataPoint
+	for _, dp := range processedDataPoints {
+		if dp.Metric == tr.Operand1Metric {
+			operand1Pts = append(operand1Pts, dp)
+		} else if dp.Metric == tr.Operand2Metric {
+			operand2Pts = append(operand2Pts, dp)
+		}
+	}
+
+	// Find singular operand1 data points
+	foundPair := false
+	for _, o1 := range operand1Pts {
+		for _, o2 := range operand2Pts {
+			if dimensionsEqual(o1.Dimensions, o2.Dimensions) {
+				foundPair = true
+				break
+			}
+		}
+		if !foundPair {
+			singularPoints = append(singularPoints, o1)
+		}
+		foundPair = false
+	}
+	// Find singular operand2 data points
+	for _, o2 := range operand2Pts {
+		for _, o1 := range operand1Pts {
+			if dimensionsEqual(o1.Dimensions, o2.Dimensions) {
+				foundPair = true
+				break
+			}
+		}
+		if !foundPair {
+			singularPoints = append(singularPoints, o2)
+		}
+		foundPair = false
+	}
+
+	return singularPoints
 }
 
 func calcNewMetricInputPairs(processedDataPoints []*sfxpb.DataPoint, tr Rule) [][2]*sfxpb.DataPoint {
