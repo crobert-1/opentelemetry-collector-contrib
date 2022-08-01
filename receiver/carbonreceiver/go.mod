@@ -10,7 +10,7 @@ require (
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/collector v0.39.1-0.20211119172502-53d057f9c0e7
 	go.uber.org/zap v1.19.1
-	google.golang.org/protobuf v1.27.1
+	google.golang.org/protobuf v1.28.1
 
 )
 
