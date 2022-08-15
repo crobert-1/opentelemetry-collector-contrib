@@ -11,7 +11,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	go.opentelemetry.io/collector v0.39.1-0.20211119172502-53d057f9c0e7
 	go.opentelemetry.io/collector/model v0.39.1-0.20211119172502-53d057f9c0e7
-	go.uber.org/zap v1.19.1
+	go.uber.org/zap v1.22.0
 )
 
 require (
@@ -42,7 +42,7 @@ require (
 	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 replace github.com/open-telemetry/opentelemetry-collector-contrib/internal/splunk => ../../internal/splunk
