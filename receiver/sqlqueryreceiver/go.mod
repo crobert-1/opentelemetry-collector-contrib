@@ -8,6 +8,7 @@ require (
 	github.com/docker/go-connections v0.4.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/lib/pq v1.10.6
+	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/sqlscraper v0.0.0-00010101000000-000000000000
 	github.com/sijms/go-ora/v2 v2.5.2
 	github.com/snowflakedb/gosnowflake v1.6.12
 	github.com/stretchr/testify v1.8.0
@@ -58,7 +59,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/knadh/koanf v1.4.3 // indirect
-	github.com/kr/pretty v0.3.0 // indirect
+	github.com/kr/text v0.2.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mattn/go-ieproxy v0.0.1 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
@@ -97,3 +98,5 @@ require (
 )
 
 replace github.com/open-telemetry/opentelemetry-collector-contrib/internal/scrapertest => ../../internal/scrapertest
+
+replace github.com/open-telemetry/opentelemetry-collector-contrib/pkg/sqlscraper => ../../pkg/sqlscraper
