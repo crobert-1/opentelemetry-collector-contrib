@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package sqlqueryreceiver
+package sqlscraper
 
-import "context"
+import (
+	"context"
+)
 
 type fakeDBClient struct {
 	requestCounter int
-	responses      [][]metricRow
+	responses      [][]MetricRow
 	err            error
 }
 
-func (c *fakeDBClient) metricRows(context.Context) ([]metricRow, error) {
+func (c *fakeDBClient) MetricRows(ctx context.Context) ([]MetricRow, error) {
 	if c.err != nil {
 		return nil, c.err
 	}

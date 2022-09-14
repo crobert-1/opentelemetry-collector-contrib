@@ -18,13 +18,15 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"go.opentelemetry.io/collector/config"
 	"time"
 
+	"go.opentelemetry.io/collector/config"
 	"go.opentelemetry.io/collector/receiver/scraperhelper"
 	"go.uber.org/multierr"
 	"go.uber.org/zap"
 )
+
+var TypeStr config.Type
 
 type SqlOpenerFunc func(driverName, dataSourceName string) (*sql.DB, error)
 type DBProviderFunc func() (*sql.DB, error)
@@ -56,14 +58,14 @@ func (c Config) Validate() error {
 }
 
 type Query struct {
-	SQL     string      `mapstructure:"Sql"`
+	SQL     string      `mapstructure:"sql"`
 	Metrics []MetricCfg `mapstructure:"metrics"`
 }
 
 func (q Query) Validate() error {
 	var errs error
 	if q.SQL == "" {
-		errs = multierr.Append(errs, errors.New("'query.Sql' cannot be empty"))
+		errs = multierr.Append(errs, errors.New("'query.sql' cannot be empty"))
 	}
 	if len(q.Metrics) == 0 {
 		errs = multierr.Append(errs, errors.New("'query.metrics' cannot be empty"))
@@ -166,7 +168,7 @@ func (a MetricAggregation) Validate() error {
 func CreateDefaultConfig() config.Receiver {
 	return &Config{
 		ScraperControllerSettings: scraperhelper.ScraperControllerSettings{
-			ReceiverSettings:   config.NewReceiverSettings(config.NewComponentID("sqlscraper")),
+			ReceiverSettings:   config.NewReceiverSettings(config.NewComponentID(TypeStr)),
 			CollectionInterval: 10 * time.Second,
 		},
 	}

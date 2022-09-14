@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package sqlqueryreceiver
+package sqlscraper
 
 import (
 	"context"
@@ -30,7 +30,7 @@ import (
 )
 
 func TestCreateReceiver(t *testing.T) {
-	createReceiver := createReceiverFunc(fakeDBConnect, mkFakeClient)
+	createReceiver := CreateReceiverFunc("typeStr", fakeDBConnect, mkFakeClient)
 	ctx := context.Background()
 	receiver, err := createReceiver(
 		ctx,
@@ -64,6 +64,6 @@ func fakeDBConnect(string, string) (*sql.DB, error) {
 	return nil, nil
 }
 
-func mkFakeClient(db *sql.DB, s string, logger *zap.Logger) dbClient {
-	return &fakeDBClient{responses: [][]metricRow{{{"foo": "111"}}}}
+func mkFakeClient(db *sql.DB, s string, logger *zap.Logger) DBClient {
+	return &fakeDBClient{responses: [][]MetricRow{{{"foo": "111"}}}}
 }

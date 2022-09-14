@@ -25,7 +25,7 @@ import (
 	"go.opentelemetry.io/collector/receiver/scraperhelper"
 )
 
-func CreateReceiverFunc(typeStr string, sqlOpenerFunc SqlOpenerFunc, clientProviderFunc ClientProviderFunc) component.CreateMetricsReceiverFunc {
+func CreateReceiverFunc(typeStr config.Type, sqlOpenerFunc SqlOpenerFunc, clientProviderFunc ClientProviderFunc) component.CreateMetricsReceiverFunc {
 	return func(
 		ctx context.Context,
 		settings component.ReceiverCreateSettings,
