@@ -8,7 +8,7 @@ require (
 	github.com/open-telemetry/opentelemetry-collector-contrib/internal/coreinternal v0.39.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/internal/sharedcomponent v0.39.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/translator/opencensus v0.39.0
-	github.com/rs/cors v1.8.0
+	github.com/rs/cors v1.8.3
 	github.com/soheilhy/cmux v0.1.5
 	github.com/stretchr/testify v1.7.0
 	go.opentelemetry.io/collector v0.39.1-0.20211119172502-53d057f9c0e7
