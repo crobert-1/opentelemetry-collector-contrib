@@ -13,6 +13,7 @@ require (
 	go.opentelemetry.io/collector/semconv v0.92.1-0.20240112172857-83d463ceba06
 	go.opentelemetry.io/otel/metric v1.21.0
 	go.opentelemetry.io/otel/trace v1.21.0
+	go.uber.org/goleak v1.3.0
 	go.uber.org/multierr v1.11.0
 	go.uber.org/zap v1.26.0
 	golang.org/x/text v0.14.0
