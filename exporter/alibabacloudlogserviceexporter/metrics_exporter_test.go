@@ -6,6 +6,7 @@ package alibabacloudlogserviceexporter
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -22,10 +23,14 @@ func TestNewMetricsExporter(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	require.NotNil(t, got)
+	defer func() {
+		assert.NoError(t, got.Shutdown(context.Background()))
+	}()
 
 	// This will put trace data to send buffer and return success.
 	err = got.ConsumeMetrics(context.Background(), testdata.GenerateMetricsOneMetric())
 	assert.NoError(t, err)
+	time.Sleep(15 * time.Second)
 }
 
 func TestNewFailsWithEmptyMetricsExporterName(t *testing.T) {

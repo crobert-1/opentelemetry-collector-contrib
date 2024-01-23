@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// newMetricsExporter return a new LogSerice metrics exporter.
+// newMetricsExporter return a new LogService metrics exporter.
 func newMetricsExporter(set exporter.CreateSettings, cfg component.Config) (exporter.Metrics, error) {
 
 	l := &logServiceMetricsSender{
@@ -29,7 +29,8 @@ func newMetricsExporter(set exporter.CreateSettings, cfg component.Config) (expo
 		context.TODO(),
 		set,
 		cfg,
-		l.pushMetricsData)
+		l.pushMetricsData,
+		exporterhelper.WithShutdown(l.client.shutdown))
 }
 
 type logServiceMetricsSender struct {

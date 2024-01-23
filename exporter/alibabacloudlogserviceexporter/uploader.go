@@ -4,6 +4,7 @@
 package alibabacloudlogserviceexporter // import "github.com/open-telemetry/opentelemetry-collector-contrib/exporter/alibabacloudlogserviceexporter"
 
 import (
+	"context"
 	"errors"
 	"net"
 	"os"
@@ -18,6 +19,7 @@ import (
 type logServiceClient interface {
 	// sendLogs send message to LogService
 	sendLogs(logs []*sls.Log) error
+	shutdown(ctx context.Context) error
 }
 
 type logServiceClientImpl struct {
@@ -89,4 +91,9 @@ func (c *logServiceClientImpl) Fail(result *producer.Result) {
 		zap.String("code", result.GetErrorCode()),
 		zap.String("error_message", result.GetErrorMessage()),
 		zap.String("request_id", result.GetRequestId()))
+}
+
+func (c *logServiceClientImpl) shutdown(_ context.Context) error {
+	c.clientInstance.SafeClose()
+	return nil
 }
