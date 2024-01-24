@@ -6,13 +6,13 @@ package alibabacloudlogserviceexporter // import "github.com/open-telemetry/open
 import (
 	"context"
 	"errors"
-	"net"
-	"os"
-
 	sls "github.com/aliyun/aliyun-log-go-sdk"
 	"github.com/aliyun/aliyun-log-go-sdk/producer"
 	slsutil "github.com/aliyun/aliyun-log-go-sdk/util"
 	"go.uber.org/zap"
+	"net"
+	"os"
+	"sync"
 )
 
 // logServiceClient log Service's client wrapper
@@ -29,6 +29,7 @@ type logServiceClientImpl struct {
 	topic          string
 	source         string
 	logger         *zap.Logger
+	logSendWG      sync.WaitGroup
 }
 
 func getIPAddress() (ipAddress string, err error) {
@@ -77,11 +78,14 @@ func newLogServiceClient(config *Config, logger *zap.Logger) (logServiceClient, 
 
 // sendLogs send message to LogService
 func (c *logServiceClientImpl) sendLogs(logs []*sls.Log) error {
+	c.logSendWG.Add(1)
 	return c.clientInstance.SendLogListWithCallBack(c.project, c.logstore, c.topic, c.source, logs, c)
 }
 
 // Success is impl of producer.CallBack
-func (c *logServiceClientImpl) Success(*producer.Result) {}
+func (c *logServiceClientImpl) Success(*producer.Result) {
+	c.logSendWG.Done()
+}
 
 // Fail is impl of producer.CallBack
 func (c *logServiceClientImpl) Fail(result *producer.Result) {
@@ -91,9 +95,11 @@ func (c *logServiceClientImpl) Fail(result *producer.Result) {
 		zap.String("code", result.GetErrorCode()),
 		zap.String("error_message", result.GetErrorMessage()),
 		zap.String("request_id", result.GetRequestId()))
+	c.logSendWG.Done()
 }
 
 func (c *logServiceClientImpl) shutdown(_ context.Context) error {
+	c.logSendWG.Wait()
 	c.clientInstance.SafeClose()
 	return nil
 }
