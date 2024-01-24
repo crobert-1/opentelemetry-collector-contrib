@@ -5,10 +5,10 @@ package alibabacloudlogserviceexporter // import "github.com/open-telemetry/open
 
 import (
 	"context"
+	"go.opentelemetry.io/collector/exporter/exporterhelper"
 
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/exporter"
-	"go.opentelemetry.io/collector/exporter/exporterhelper"
 	"go.opentelemetry.io/collector/pdata/pmetric"
 	"go.uber.org/zap"
 )
@@ -20,7 +20,13 @@ func newMetricsExporter(set exporter.CreateSettings, cfg component.Config) (expo
 		logger: set.Logger,
 	}
 
+	return newMetricsExporterWithLog(l, set, cfg)
+}
+
+// Create sub-method for testing to pass in a logger.
+func newMetricsExporterWithLog(l *logServiceMetricsSender, set exporter.CreateSettings, cfg component.Config) (exporter.Metrics, error) {
 	var err error
+
 	if l.client, err = newLogServiceClient(cfg.(*Config), set.Logger); err != nil {
 		return nil, err
 	}
