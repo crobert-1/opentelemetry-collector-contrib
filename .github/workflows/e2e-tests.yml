@@ -134,7 +134,8 @@ jobs:
       - name: run k8sattributesprocessor e2e tests
         run: |    
           cd processor/k8sattributesprocessor
-          go test -v --tags=e2e
+          go test -c -o tests
+          for test in $(go test -list . | grep -E "^(Test|Example)"); do ./tests -test.run "^$test\$" &>/dev/null && echo -n "." || echo -e "\n$test failed"; done
       - name: run receiver/kubeletstatsreceiver e2e tests
         run: |
           cd receiver/kubeletstatsreceiver
