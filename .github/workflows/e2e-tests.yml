@@ -134,7 +134,7 @@ jobs:
       - name: run k8sattributesprocessor e2e tests
         run: |    
           cd processor/k8sattributesprocessor
-          go test -v --tags=e2e
+          go test -v
       - name: run receiver/kubeletstatsreceiver e2e tests
         run: |
           cd receiver/kubeletstatsreceiver
