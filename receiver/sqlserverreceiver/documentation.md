@@ -178,6 +178,32 @@ Number of users connected to the SQL Server.
 | ---- | ----------- | ---------- |
 | {connections} | Gauge | Int |
 
+## Optional Metrics
+
+The following metrics are not emitted by default. Each of them can be enabled by applying the following configuration:
+
+```yaml
+metrics:
+  <metric_name>:
+    enabled: true
+```
+
+### sqlserver.database_io.read_latency
+
+Total time, in milliseconds, that the users waited for reads.
+
+| Unit | Metric Type | Value Type |
+| ---- | ----------- | ---------- |
+| ms | Gauge | Int |
+
+#### Attributes
+
+| Name | Description | Values |
+| ---- | ----------- | ------ |
+| physical_filename | The physical filename of the file being monitored. | Any Str |
+| logical_filename | The logical filename of the file being monitored. | Any Str |
+| file_type | The type of file being monitored. | Any Str |
+
 ## Resource Attributes
 
 | Name | Description | Values | Enabled |

@@ -31,6 +31,15 @@ attributes:
     description: The page operation types.
     type: string
     enum: [read, write]
+  physical_filename:
+    description: The physical filename of the file being monitored.
+    type: string
+  logical_filename:
+    description: The logical filename of the file being monitored.
+    type: string
+  file_type:
+    description: The type of file being monitored.
+    type: string
 
 metrics:
   sqlserver.user.connection.count:
@@ -158,6 +167,13 @@ metrics:
     unit: "{transactions}/s"
     gauge:
       value_type: double
+  sqlserver.database_io.read_latency:
+    enabled: false
+    description: Total time, in milliseconds, that the users waited for reads.
+    unit: "ms"
+    gauge:
+      value_type: int
+    attributes: [physical_filename, logical_filename, file_type]
 
 tests:
   config:
