@@ -28,7 +28,7 @@ The following settings are optional:
   If unspecified, metrics will be scraped from all instances. If configured, the `computer_name` must also be set
   when running on Windows.
 
-Direction connection options (optional, but all must be specified to enable):
+Direct connection options (optional, but all must be specified to enable):
 - `username`: The username used to connect to the SQL Server instance.
 - `password`: The password used to connect to the SQL Server instance.
 - `server`: IP Address or hostname of SQL Server instance to connect to.
