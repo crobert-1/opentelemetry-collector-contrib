@@ -57,7 +57,7 @@ func getDBConnectionString(config *Config) string {
 }
 
 // SQL Server scraper creation is split out into a separate method for the sake of testing.
-func setupSQLServerScrapers(params receiver.CreateSettings, cfg *Config) []*SQLServerScraperHelper {
+func setupSQLServerScrapers(params receiver.CreateSettings, cfg *Config) []*sqlServerScraperHelper {
 	if !directDBConnectionEnabled(cfg) {
 		params.Logger.Info("No direct connection will be made to the SQL Server: Configuration doesn't include some options.")
 		return nil
@@ -75,11 +75,11 @@ func setupSQLServerScrapers(params receiver.CreateSettings, cfg *Config) []*SQLS
 		return sql.Open("sqlserver", getDBConnectionString(cfg))
 	}
 
-	var scrapers []*SQLServerScraperHelper
+	var scrapers []*sqlServerScraperHelper
 	for i, query := range queries {
 		id := component.NewIDWithName(metadata.Type, fmt.Sprintf("query-%d: %s", i, query))
 
-		sqlServerScraper := NewScraper(id, query,
+		sqlServerScraper := newSQLServerScraper(id, query,
 			cfg.InstanceName,
 			cfg.ControllerConfig,
 			params.Logger,

@@ -22,7 +22,7 @@ import (
 	"github.com/open-telemetry/opentelemetry-collector-contrib/receiver/sqlserverreceiver/internal/metadata"
 )
 
-type SQLServerScraperHelper struct {
+type sqlServerScraperHelper struct {
 	id                 component.ID
 	sqlQuery           string
 	instanceName       string
@@ -36,9 +36,9 @@ type SQLServerScraperHelper struct {
 	mb                 *metadata.MetricsBuilder
 }
 
-var _ scraperhelper.Scraper = (*SQLServerScraperHelper)(nil)
+var _ scraperhelper.Scraper = (*sqlServerScraperHelper)(nil)
 
-func NewScraper(id component.ID,
+func newSQLServerScraper(id component.ID,
 	query string,
 	instanceName string,
 	scrapeCfg scraperhelper.ControllerConfig,
@@ -46,9 +46,9 @@ func NewScraper(id component.ID,
 	telemetry sqlquery.TelemetryConfig,
 	dbProviderFunc sqlquery.DbProviderFunc,
 	clientProviderFunc sqlquery.ClientProviderFunc,
-	mb *metadata.MetricsBuilder) *SQLServerScraperHelper {
+	mb *metadata.MetricsBuilder) *sqlServerScraperHelper {
 
-	return &SQLServerScraperHelper{
+	return &sqlServerScraperHelper{
 		id:                 id,
 		sqlQuery:           query,
 		instanceName:       instanceName,
@@ -61,11 +61,11 @@ func NewScraper(id component.ID,
 	}
 }
 
-func (s *SQLServerScraperHelper) ID() component.ID {
+func (s *sqlServerScraperHelper) ID() component.ID {
 	return s.id
 }
 
-func (s *SQLServerScraperHelper) Start(context.Context, component.Host) error {
+func (s *sqlServerScraperHelper) Start(context.Context, component.Host) error {
 	var err error
 	s.db, err = s.dbProviderFunc()
 	if err != nil {
@@ -76,7 +76,7 @@ func (s *SQLServerScraperHelper) Start(context.Context, component.Host) error {
 	return nil
 }
 
-func (s *SQLServerScraperHelper) Scrape(ctx context.Context) (pmetric.Metrics, error) {
+func (s *sqlServerScraperHelper) Scrape(ctx context.Context) (pmetric.Metrics, error) {
 	var err error
 
 	rb := s.mb.NewResourceBuilder()
@@ -94,14 +94,14 @@ func (s *SQLServerScraperHelper) Scrape(ctx context.Context) (pmetric.Metrics, e
 	return s.mb.Emit(metadata.WithResource(rb.Emit())), nil
 }
 
-func (s *SQLServerScraperHelper) Shutdown(_ context.Context) error {
+func (s *sqlServerScraperHelper) Shutdown(_ context.Context) error {
 	if s.db != nil {
 		return s.db.Close()
 	}
 	return nil
 }
 
-func (s *SQLServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb *metadata.ResourceBuilder) error {
+func (s *sqlServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb *metadata.ResourceBuilder) error {
 	// TODO: Move constants out to the package level when other queries are added.
 	const computerNameKey = "computer_name"
 	const databaseNameKey = "database_name"
@@ -116,7 +116,7 @@ func (s *SQLServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb
 		if errors.Is(err, sqlquery.ErrNullValueWarning) {
 			s.logger.Warn("problems encountered getting metric rows", zap.Error(err))
 		} else {
-			return fmt.Errorf("SQLServerScraperHelper: %w", err)
+			return fmt.Errorf("sqlServerScraperHelper: %w", err)
 		}
 	}
 
