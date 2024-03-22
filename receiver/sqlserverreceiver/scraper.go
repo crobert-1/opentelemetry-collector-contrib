@@ -129,7 +129,7 @@ func (s *sqlServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb
 			rb.SetSqlserverInstanceName(row[instanceNameKey])
 		}
 
-		val, err = strconv.ParseFloat(row[readyLatencyMsKey], 10)
+		val, err = strconv.ParseFloat(row[readyLatencyMsKey], 64)
 		if err != nil {
 			err = fmt.Errorf("row %d: %w", i, err)
 			errs = append(errs, err)
