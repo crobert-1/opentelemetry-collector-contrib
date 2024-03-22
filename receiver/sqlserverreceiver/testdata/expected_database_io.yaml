@@ -9,10 +9,10 @@ resourceMetrics:
             stringValue: 8cac97ac9b8f
     scopeMetrics:
       - metrics:
-          - description: Total time, in milliseconds, that the users waited for reads.
+          - description: Total time that the users waited for reads.
             gauge:
               dataPoints:
-                - asInt: "5"
+                - asDouble: 0.005
                   attributes:
                     - key: file_type
                       value:
@@ -25,7 +25,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/MSDBLog.ldf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "8"
+                - asDouble: 0.008
                   attributes:
                     - key: file_type
                       value:
@@ -38,7 +38,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/mastlog.ldf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "7"
+                - asDouble: 0.007
                   attributes:
                     - key: file_type
                       value:
@@ -51,7 +51,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/modellog.ldf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "2"
+                - asDouble: 0.002
                   attributes:
                     - key: file_type
                       value:
@@ -64,7 +64,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/templog.ldf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "51"
+                - asDouble: 0.051
                   attributes:
                     - key: file_type
                       value:
@@ -77,7 +77,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/MSDBData.mdf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "62"
+                - asDouble: 0.062
                   attributes:
                     - key: file_type
                       value:
@@ -90,7 +90,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/master.mdf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "21"
+                - asDouble: 0.021
                   attributes:
                     - key: file_type
                       value:
@@ -103,7 +103,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/model.mdf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "9"
+                - asDouble: 0.009
                   attributes:
                     - key: file_type
                       value:
@@ -116,7 +116,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb.mdf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "1"
+                - asDouble: 0.001
                   attributes:
                     - key: file_type
                       value:
@@ -129,7 +129,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb2.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "2"
+                - asDouble: 0.002
                   attributes:
                     - key: file_type
                       value:
@@ -142,7 +142,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb3.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "1"
+                - asDouble: 0.001
                   attributes:
                     - key: file_type
                       value:
@@ -155,7 +155,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb4.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "2"
+                - asDouble: 0.002
                   attributes:
                     - key: file_type
                       value:
@@ -168,7 +168,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb5.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "2"
+                - asDouble: 0.002
                   attributes:
                     - key: file_type
                       value:
@@ -181,7 +181,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb6.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "1"
+                - asDouble: 0.001
                   attributes:
                     - key: file_type
                       value:
@@ -194,7 +194,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb7.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-                - asInt: "1"
+                - asDouble: 0.001
                   attributes:
                     - key: file_type
                       value:
@@ -208,7 +208,7 @@ resourceMetrics:
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
             name: sqlserver.database_io.read_latency
-            unit: ms
+            unit: s
         scope:
           name: otelcol/sqlserverreceiver
           version: latest

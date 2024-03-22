@@ -15,7 +15,6 @@ import (
 	"go.opentelemetry.io/collector/pdata/pcommon"
 	"go.opentelemetry.io/collector/pdata/pmetric"
 	"go.opentelemetry.io/collector/receiver/scraperhelper"
-	"go.uber.org/multierr"
 	"go.uber.org/zap"
 
 	"github.com/open-telemetry/opentelemetry-collector-contrib/internal/sqlquery"
@@ -120,9 +119,9 @@ func (s *sqlServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb
 		}
 	}
 
-	var errs error
+	var errs []error
 	now := pcommon.NewTimestampFromTime(time.Now())
-	var val int64
+	var val float64
 	for i, row := range rows {
 		if i == 0 {
 			rb.SetSqlserverComputerName(row[computerNameKey])
@@ -130,12 +129,12 @@ func (s *sqlServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb
 			rb.SetSqlserverInstanceName(row[instanceNameKey])
 		}
 
-		val, err = strconv.ParseInt(row[readyLatencyMsKey], 10, 64)
+		val, err = strconv.ParseFloat(row[readyLatencyMsKey], 10)
 		if err != nil {
 			err = fmt.Errorf("row %d: %w", i, err)
-			errs = multierr.Append(errs, err)
+			errs = append(errs, err)
 		} else {
-			s.mb.RecordSqlserverDatabaseIoReadLatencyDataPoint(now, val, row[physicalFilenameKey], row[logicalFilenameKey], row[fileTypeKey])
+			s.mb.RecordSqlserverDatabaseIoReadLatencyDataPoint(now, val/1e3, row[physicalFilenameKey], row[logicalFilenameKey], row[fileTypeKey])
 		}
 	}
 
@@ -143,5 +142,5 @@ func (s *sqlServerScraperHelper) recordDatabaseIOMetrics(ctx context.Context, rb
 		s.logger.Info("SQLSeverScraperHelper: No rows found by query")
 	}
 
-	return errs
+	return errors.Join(errs...)
 }

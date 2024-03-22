@@ -193,20 +193,20 @@ type metricSqlserverDatabaseIoReadLatency struct {
 // init fills sqlserver.database_io.read_latency metric with initial data.
 func (m *metricSqlserverDatabaseIoReadLatency) init() {
 	m.data.SetName("sqlserver.database_io.read_latency")
-	m.data.SetDescription("Total time, in milliseconds, that the users waited for reads.")
-	m.data.SetUnit("ms")
+	m.data.SetDescription("Total time that the users waited for reads.")
+	m.data.SetUnit("s")
 	m.data.SetEmptyGauge()
 	m.data.Gauge().DataPoints().EnsureCapacity(m.capacity)
 }
 
-func (m *metricSqlserverDatabaseIoReadLatency) recordDataPoint(start pcommon.Timestamp, ts pcommon.Timestamp, val int64, physicalFilenameAttributeValue string, logicalFilenameAttributeValue string, fileTypeAttributeValue string) {
+func (m *metricSqlserverDatabaseIoReadLatency) recordDataPoint(start pcommon.Timestamp, ts pcommon.Timestamp, val float64, physicalFilenameAttributeValue string, logicalFilenameAttributeValue string, fileTypeAttributeValue string) {
 	if !m.config.Enabled {
 		return
 	}
 	dp := m.data.Gauge().DataPoints().AppendEmpty()
 	dp.SetStartTimestamp(start)
 	dp.SetTimestamp(ts)
-	dp.SetIntValue(val)
+	dp.SetDoubleValue(val)
 	dp.Attributes().PutStr("physical_filename", physicalFilenameAttributeValue)
 	dp.Attributes().PutStr("logical_filename", logicalFilenameAttributeValue)
 	dp.Attributes().PutStr("file_type", fileTypeAttributeValue)
@@ -1262,7 +1262,7 @@ func (mb *MetricsBuilder) RecordSqlserverBatchSQLRecompilationRateDataPoint(ts p
 }
 
 // RecordSqlserverDatabaseIoReadLatencyDataPoint adds a data point to sqlserver.database_io.read_latency metric.
-func (mb *MetricsBuilder) RecordSqlserverDatabaseIoReadLatencyDataPoint(ts pcommon.Timestamp, val int64, physicalFilenameAttributeValue string, logicalFilenameAttributeValue string, fileTypeAttributeValue string) {
+func (mb *MetricsBuilder) RecordSqlserverDatabaseIoReadLatencyDataPoint(ts pcommon.Timestamp, val float64, physicalFilenameAttributeValue string, logicalFilenameAttributeValue string, fileTypeAttributeValue string) {
 	mb.metricSqlserverDatabaseIoReadLatency.recordDataPoint(mb.startTime, ts, val, physicalFilenameAttributeValue, logicalFilenameAttributeValue, fileTypeAttributeValue)
 }
 

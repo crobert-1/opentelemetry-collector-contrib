@@ -190,11 +190,11 @@ metrics:
 
 ### sqlserver.database_io.read_latency
 
-Total time, in milliseconds, that the users waited for reads.
+Total time that the users waited for reads.
 
 | Unit | Metric Type | Value Type |
 | ---- | ----------- | ---------- |
-| ms | Gauge | Int |
+| s | Gauge | Double |
 
 #### Attributes
 
