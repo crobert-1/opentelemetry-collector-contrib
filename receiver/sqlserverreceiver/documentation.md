@@ -192,6 +192,8 @@ metrics:
 
 Total time that the users waited for reads.
 
+This metric is only available when the receiver is configured to directly connect to SQL Server.
+
 | Unit | Metric Type | Value Type |
 | ---- | ----------- | ---------- |
 | s | Gauge | Double |
