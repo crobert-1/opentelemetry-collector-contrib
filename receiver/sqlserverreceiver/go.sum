@@ -213,10 +213,17 @@ github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsT
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
+github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
+github.com/zeebo/assert v1.3.0 h1:g7C04CbJuIDKNPFHmsk4hwZDO5O+kntRxzaUoNXj+IQ=
+github.com/zeebo/assert v1.3.0/go.mod h1:Pq9JiuJQpG8JLJdtkwrJESF0Foym2/D9XMU5ciN/wJ0=
+github.com/zeebo/xxh3 v1.0.2 h1:xZmwmqxHZA8AI603jOQ0tMqmBr9lPeFwGg6d+xy9DC0=
+github.com/zeebo/xxh3 v1.0.2/go.mod h1:5NWz9Sef7zIDm2JHfFlcQvNekmcEl9ekUZQQKCYaDcA=
 go.opentelemetry.io/collector v0.97.1-0.20240327181407-1038b67c85a0 h1:dvxsnQ+nBUX99/Sza/bYnW9lLmkb9Cm4fFqFlZk/cNs=
 go.opentelemetry.io/collector v0.97.1-0.20240327181407-1038b67c85a0/go.mod h1:V6xquYAaO2VHVu4DBK28JYuikRdZajh7DH5Vl/Y8NiA=
 go.opentelemetry.io/collector/component v0.97.1-0.20240327181407-1038b67c85a0 h1:OBXZrNlbQtCfpcqfVmKfsiqEKket/cHm61e4l2hfxuo=
 go.opentelemetry.io/collector/component v0.97.1-0.20240327181407-1038b67c85a0/go.mod h1:F/m3HMlkb16RKI7wJjgbECK1IZkAcmB8bu7yD8XOkwM=
+go.opentelemetry.io/collector/config/configopaque v1.4.0 h1:5KgD9oLN+N07HqDsLzUrU0mE2pC8cMhrCSC1Nf8CEO4=
+go.opentelemetry.io/collector/config/configopaque v1.4.0/go.mod h1:7Qzo69x7i+FaNELeA9jmZtVvfnR5lE6JYa5YEOCJPFQ=
 go.opentelemetry.io/collector/config/configtelemetry v0.97.1-0.20240327181407-1038b67c85a0 h1:n6gNCKxrCs3hD+jafL93JdtPVl05p+C5PecoNE7YUrw=
 go.opentelemetry.io/collector/config/configtelemetry v0.97.1-0.20240327181407-1038b67c85a0/go.mod h1:YV5PaOdtnU1xRomPcYqoHmyCr48tnaAREeGO96EZw8o=
 go.opentelemetry.io/collector/confmap v0.97.1-0.20240327181407-1038b67c85a0 h1:Cm5WDKNnmKLZmiAzodv3LLodAN3fAZFl+Q6jek/K6xU=
