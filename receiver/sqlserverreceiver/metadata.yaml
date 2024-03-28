@@ -169,10 +169,66 @@ metrics:
       value_type: double
   sqlserver.database.io.read_latency:
     enabled: false
-    description: Total time that the users waited for reads.
+    description: Total time that the users waited for reads issued on this file.
     unit: "s"
-    gauge:
+    sum:
+      monotonic: true
+      aggregation_temporality: cumulative
       value_type: double
+    attributes: [physical_filename, logical_filename, file_type]
+    extended_documentation: This metric is only available when the receiver is configured to directly connect to SQL Server.
+  sqlserver.database.io.write_latency:
+    enabled: false
+    description: Total time that the users waited for writes.
+    unit: "s"
+    sum:
+      monotonic: true
+      aggregation_temporality: cumulative
+      value_type: double
+    attributes: [physical_filename, logical_filename, file_type]
+    extended_documentation: This metric is only available when the receiver is configured to directly connect to SQL Server.
+  sqlserver.database.io.reads:
+    enabled: false
+    description: Number of reads issued on the file.
+    unit: "{reads}"
+    sum:
+      monotonic: true
+      aggregation_temporality: cumulative
+      value_type: int
+      input_type: string
+    attributes: [physical_filename, logical_filename, file_type]
+    extended_documentation: This metric is only available when the receiver is configured to directly connect to SQL Server.
+  sqlserver.database.io.writes:
+    enabled: false
+    description: Number of writes made on this file.
+    unit: "{writes}"
+    sum:
+      monotonic: true
+      aggregation_temporality: cumulative
+      value_type: int
+      input_type: string
+    attributes: [physical_filename, logical_filename, file_type]
+    extended_documentation: This metric is only available when the receiver is configured to directly connect to SQL Server.
+  sqlserver.database.io.read_bytes:
+    enabled: false
+    description: Total number of bytes read on this file.
+    unit: "{By}"
+    sum:
+      monotonic: true
+      aggregation_temporality: cumulative
+      value_type: int
+      input_type: string
+    attributes: [physical_filename, logical_filename, file_type]
+    extended_documentation: This metric is only available when the receiver is configured to directly connect to SQL Server.
+  sqlserver.database.io.write_bytes:
+    enabled: false
+    description: Total number of bytes written to the file.
+    unit: "{By}"
+    sum:
+      monotonic: true
+      aggregation_temporality: cumulative
+      value_type: int
+      input_type: string
     attributes: [physical_filename, logical_filename, file_type]
     extended_documentation: This metric is only available when the receiver is configured to directly connect to SQL Server.
 

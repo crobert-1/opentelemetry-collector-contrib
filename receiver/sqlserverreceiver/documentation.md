@@ -188,15 +188,105 @@ metrics:
     enabled: true
 ```
 
-### sqlserver.database.io.read_latency
+### sqlserver.database.io.read_bytes
 
-Total time that the users waited for reads.
+Total number of bytes read on this file.
 
 This metric is only available when the receiver is configured to directly connect to SQL Server.
 
-| Unit | Metric Type | Value Type |
-| ---- | ----------- | ---------- |
-| s | Gauge | Double |
+| Unit | Metric Type | Value Type | Aggregation Temporality | Monotonic |
+| ---- | ----------- | ---------- | ----------------------- | --------- |
+| {By} | Sum | Int | Cumulative | true |
+
+#### Attributes
+
+| Name | Description | Values |
+| ---- | ----------- | ------ |
+| physical_filename | The physical filename of the file being monitored. | Any Str |
+| logical_filename | The logical filename of the file being monitored. | Any Str |
+| file_type | The type of file being monitored. | Any Str |
+
+### sqlserver.database.io.read_latency
+
+Total time that the users waited for reads issued on this file.
+
+This metric is only available when the receiver is configured to directly connect to SQL Server.
+
+| Unit | Metric Type | Value Type | Aggregation Temporality | Monotonic |
+| ---- | ----------- | ---------- | ----------------------- | --------- |
+| s | Sum | Double | Cumulative | true |
+
+#### Attributes
+
+| Name | Description | Values |
+| ---- | ----------- | ------ |
+| physical_filename | The physical filename of the file being monitored. | Any Str |
+| logical_filename | The logical filename of the file being monitored. | Any Str |
+| file_type | The type of file being monitored. | Any Str |
+
+### sqlserver.database.io.reads
+
+Number of reads issued on the file.
+
+This metric is only available when the receiver is configured to directly connect to SQL Server.
+
+| Unit | Metric Type | Value Type | Aggregation Temporality | Monotonic |
+| ---- | ----------- | ---------- | ----------------------- | --------- |
+| {reads} | Sum | Int | Cumulative | true |
+
+#### Attributes
+
+| Name | Description | Values |
+| ---- | ----------- | ------ |
+| physical_filename | The physical filename of the file being monitored. | Any Str |
+| logical_filename | The logical filename of the file being monitored. | Any Str |
+| file_type | The type of file being monitored. | Any Str |
+
+### sqlserver.database.io.write_bytes
+
+Total number of bytes written to the file.
+
+This metric is only available when the receiver is configured to directly connect to SQL Server.
+
+| Unit | Metric Type | Value Type | Aggregation Temporality | Monotonic |
+| ---- | ----------- | ---------- | ----------------------- | --------- |
+| {By} | Sum | Int | Cumulative | true |
+
+#### Attributes
+
+| Name | Description | Values |
+| ---- | ----------- | ------ |
+| physical_filename | The physical filename of the file being monitored. | Any Str |
+| logical_filename | The logical filename of the file being monitored. | Any Str |
+| file_type | The type of file being monitored. | Any Str |
+
+### sqlserver.database.io.write_latency
+
+Total time that the users waited for writes.
+
+This metric is only available when the receiver is configured to directly connect to SQL Server.
+
+| Unit | Metric Type | Value Type | Aggregation Temporality | Monotonic |
+| ---- | ----------- | ---------- | ----------------------- | --------- |
+| s | Sum | Double | Cumulative | true |
+
+#### Attributes
+
+| Name | Description | Values |
+| ---- | ----------- | ------ |
+| physical_filename | The physical filename of the file being monitored. | Any Str |
+| logical_filename | The logical filename of the file being monitored. | Any Str |
+| file_type | The type of file being monitored. | Any Str |
+
+### sqlserver.database.io.writes
+
+Number of writes made on this file.
+
+This metric is only available when the receiver is configured to directly connect to SQL Server.
+
+| Unit | Metric Type | Value Type | Aggregation Temporality | Monotonic |
+| ---- | ----------- | ---------- | ----------------------- | --------- |
+| {writes} | Sum | Int | Cumulative | true |
 
 #### Attributes
 

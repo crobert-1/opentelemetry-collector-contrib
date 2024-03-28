@@ -28,7 +28,12 @@ type MetricsConfig struct {
 	SqlserverBatchRequestRate            MetricConfig `mapstructure:"sqlserver.batch.request.rate"`
 	SqlserverBatchSQLCompilationRate     MetricConfig `mapstructure:"sqlserver.batch.sql_compilation.rate"`
 	SqlserverBatchSQLRecompilationRate   MetricConfig `mapstructure:"sqlserver.batch.sql_recompilation.rate"`
+	SqlserverDatabaseIoReadBytes         MetricConfig `mapstructure:"sqlserver.database.io.read_bytes"`
 	SqlserverDatabaseIoReadLatency       MetricConfig `mapstructure:"sqlserver.database.io.read_latency"`
+	SqlserverDatabaseIoReads             MetricConfig `mapstructure:"sqlserver.database.io.reads"`
+	SqlserverDatabaseIoWriteBytes        MetricConfig `mapstructure:"sqlserver.database.io.write_bytes"`
+	SqlserverDatabaseIoWriteLatency      MetricConfig `mapstructure:"sqlserver.database.io.write_latency"`
+	SqlserverDatabaseIoWrites            MetricConfig `mapstructure:"sqlserver.database.io.writes"`
 	SqlserverLockWaitRate                MetricConfig `mapstructure:"sqlserver.lock.wait.rate"`
 	SqlserverLockWaitTimeAvg             MetricConfig `mapstructure:"sqlserver.lock.wait_time.avg"`
 	SqlserverPageBufferCacheHitRatio     MetricConfig `mapstructure:"sqlserver.page.buffer_cache.hit_ratio"`
@@ -59,7 +64,22 @@ func DefaultMetricsConfig() MetricsConfig {
 		SqlserverBatchSQLRecompilationRate: MetricConfig{
 			Enabled: true,
 		},
+		SqlserverDatabaseIoReadBytes: MetricConfig{
+			Enabled: false,
+		},
 		SqlserverDatabaseIoReadLatency: MetricConfig{
+			Enabled: false,
+		},
+		SqlserverDatabaseIoReads: MetricConfig{
+			Enabled: false,
+		},
+		SqlserverDatabaseIoWriteBytes: MetricConfig{
+			Enabled: false,
+		},
+		SqlserverDatabaseIoWriteLatency: MetricConfig{
+			Enabled: false,
+		},
+		SqlserverDatabaseIoWrites: MetricConfig{
 			Enabled: false,
 		},
 		SqlserverLockWaitRate: MetricConfig{
