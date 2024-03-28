@@ -188,7 +188,7 @@ metrics:
     enabled: true
 ```
 
-### sqlserver.database_io.read_latency
+### sqlserver.database.io.read_latency
 
 Total time that the users waited for reads.
 

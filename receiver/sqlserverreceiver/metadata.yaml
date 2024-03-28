@@ -167,7 +167,7 @@ metrics:
     unit: "{transactions}/s"
     gauge:
       value_type: double
-  sqlserver.database_io.read_latency:
+  sqlserver.database.io.read_latency:
     enabled: false
     description: Total time that the users waited for reads.
     unit: "s"

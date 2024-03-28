@@ -190,9 +190,9 @@ type metricSqlserverDatabaseIoReadLatency struct {
 	capacity int            // max observed number of data points added to the metric.
 }
 
-// init fills sqlserver.database_io.read_latency metric with initial data.
+// init fills sqlserver.database.io.read_latency metric with initial data.
 func (m *metricSqlserverDatabaseIoReadLatency) init() {
-	m.data.SetName("sqlserver.database_io.read_latency")
+	m.data.SetName("sqlserver.database.io.read_latency")
 	m.data.SetDescription("Total time that the users waited for reads.")
 	m.data.SetUnit("s")
 	m.data.SetEmptyGauge()
@@ -1261,7 +1261,7 @@ func (mb *MetricsBuilder) RecordSqlserverBatchSQLRecompilationRateDataPoint(ts p
 	mb.metricSqlserverBatchSQLRecompilationRate.recordDataPoint(mb.startTime, ts, val)
 }
 
-// RecordSqlserverDatabaseIoReadLatencyDataPoint adds a data point to sqlserver.database_io.read_latency metric.
+// RecordSqlserverDatabaseIoReadLatencyDataPoint adds a data point to sqlserver.database.io.read_latency metric.
 func (mb *MetricsBuilder) RecordSqlserverDatabaseIoReadLatencyDataPoint(ts pcommon.Timestamp, val float64, physicalFilenameAttributeValue string, logicalFilenameAttributeValue string, fileTypeAttributeValue string) {
 	mb.metricSqlserverDatabaseIoReadLatency.recordDataPoint(mb.startTime, ts, val, physicalFilenameAttributeValue, logicalFilenameAttributeValue, fileTypeAttributeValue)
 }

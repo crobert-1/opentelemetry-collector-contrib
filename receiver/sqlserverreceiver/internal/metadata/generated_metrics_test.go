@@ -200,9 +200,9 @@ func TestMetricsBuilder(t *testing.T) {
 					assert.Equal(t, ts, dp.Timestamp())
 					assert.Equal(t, pmetric.NumberDataPointValueTypeDouble, dp.ValueType())
 					assert.Equal(t, float64(1), dp.DoubleValue())
-				case "sqlserver.database_io.read_latency":
-					assert.False(t, validatedMetrics["sqlserver.database_io.read_latency"], "Found a duplicate in the metrics slice: sqlserver.database_io.read_latency")
-					validatedMetrics["sqlserver.database_io.read_latency"] = true
+				case "sqlserver.database.io.read_latency":
+					assert.False(t, validatedMetrics["sqlserver.database.io.read_latency"], "Found a duplicate in the metrics slice: sqlserver.database.io.read_latency")
+					validatedMetrics["sqlserver.database.io.read_latency"] = true
 					assert.Equal(t, pmetric.MetricTypeGauge, ms.At(i).Type())
 					assert.Equal(t, 1, ms.At(i).Gauge().DataPoints().Len())
 					assert.Equal(t, "Total time that the users waited for reads.", ms.At(i).Description())

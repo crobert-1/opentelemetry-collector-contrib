@@ -28,7 +28,7 @@ type MetricsConfig struct {
 	SqlserverBatchRequestRate            MetricConfig `mapstructure:"sqlserver.batch.request.rate"`
 	SqlserverBatchSQLCompilationRate     MetricConfig `mapstructure:"sqlserver.batch.sql_compilation.rate"`
 	SqlserverBatchSQLRecompilationRate   MetricConfig `mapstructure:"sqlserver.batch.sql_recompilation.rate"`
-	SqlserverDatabaseIoReadLatency       MetricConfig `mapstructure:"sqlserver.database_io.read_latency"`
+	SqlserverDatabaseIoReadLatency       MetricConfig `mapstructure:"sqlserver.database.io.read_latency"`
 	SqlserverLockWaitRate                MetricConfig `mapstructure:"sqlserver.lock.wait.rate"`
 	SqlserverLockWaitTimeAvg             MetricConfig `mapstructure:"sqlserver.lock.wait_time.avg"`
 	SqlserverPageBufferCacheHitRatio     MetricConfig `mapstructure:"sqlserver.page.buffer_cache.hit_ratio"`

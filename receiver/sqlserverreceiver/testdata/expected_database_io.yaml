@@ -207,7 +207,7 @@ resourceMetrics:
                         stringValue: /var/opt/mssql/data/tempdb8.ndf
                   startTimeUnixNano: "1000000"
                   timeUnixNano: "2000000"
-            name: sqlserver.database_io.read_latency
+            name: sqlserver.database.io.read_latency
             unit: s
         scope:
           name: otelcol/sqlserverreceiver
