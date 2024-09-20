@@ -4,10 +4,8 @@
 package signalfxexporter
 
 import (
-	"fmt"
 	"net/url"
 	"path/filepath"
-	"reflect"
 	"testing"
 	"time"
 
@@ -21,7 +19,6 @@ import (
 	"go.opentelemetry.io/collector/confmap"
 	"go.opentelemetry.io/collector/confmap/confmaptest"
 	"go.opentelemetry.io/collector/exporter/exporterhelper"
-	"gopkg.in/yaml.v3"
 
 	apmcorrelation "github.com/open-telemetry/opentelemetry-collector-contrib/exporter/signalfxexporter/internal/apm/correlations"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/signalfxexporter/internal/correlation"
@@ -267,7 +264,7 @@ func TestConfigGetMetricTranslator(t *testing.T) {
 				DeltaTranslationTTL: 3600,
 			},
 			want: func() *translation.MetricTranslator {
-				translator, err := translation.NewMetricTranslator(translation.DefaultTranslationRules, 3600, done)
+				translator, err := translation.NewMetricTranslator(defaultTranslationRules, 3600, done)
 				require.NoError(t, err)
 				return translator
 			}(),
@@ -491,30 +488,4 @@ func mustStringFilter(t *testing.T, filter string) *dpfilters.StringFilter {
 	sf, err := dpfilters.NewStringFilter([]string{filter})
 	require.NoError(t, err)
 	return sf
-}
-
-type DeprecatedConfig struct {
-	TranslationRules []translation.Rule `mapstructure:"translation_rules"`
-}
-
-func testLoadDeprecatedConfig(bytes []byte) (DeprecatedConfig, error) {
-	var data map[string]any
-	var cfg DeprecatedConfig
-	if err := yaml.Unmarshal(bytes, &data); err != nil {
-		return cfg, err
-	}
-
-	if err := confmap.NewFromStringMap(data).Unmarshal(&cfg); err != nil {
-		return cfg, fmt.Errorf("failed to load default exclude metrics: %w", err)
-	}
-
-	return cfg, nil
-}
-
-// This test is to ensure the conversion from YAML-defined rules to programmatically defined rules contains
-// no functional changes. If the default translation rules ever need to be changed, this test can be removed.
-func TestConfigNewOldDefaultTranslationRules(t *testing.T) {
-	originalTranslationConfig, err := testLoadDeprecatedConfig([]byte(translation.OriginalDefaultTranslationRulesYaml))
-	assert.NoError(t, err)
-	assert.True(t, reflect.DeepEqual(translation.DefaultTranslationRules, originalTranslationConfig.TranslationRules))
 }
